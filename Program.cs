@@ -18,16 +18,15 @@ namespace PlainsAndDepressions
                 new int[] {1,0,1,1,0,0,1,0}
             };
 
-            List<Depression> depressions = FindDepressions(arr);
+            var depressions = FindDepressions(arr);
 
-            depressions.ForEach(d => {
-                Console.Write(d.Size+ " ");
-            });
+            foreach (var depression in depressions)
+                Console.Write(depression.Size + " ");
 
             Console.ReadKey();
         }
 
-        private static List<Depression> FindDepressions(int[][] arr)
+        private static IOrderedEnumerable<Depression> FindDepressions(int[][] arr)
         {
             List<Depression> depressions = new List<Depression>();
 
@@ -77,7 +76,7 @@ namespace PlainsAndDepressions
                 }
             }
 
-            return depressions.OrderBy(d => d.Size).ToList();
+            return depressions.OrderBy(d => d.Size);
         }
     }
 }
