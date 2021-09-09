@@ -28,13 +28,10 @@ namespace PlainsAndDepressions
 
         private static IOrderedEnumerable<Depression> FindDepressions(int[][] arr)
         {
-            List<Depression> depressions = new List<Depression>();
-
             //max teoretical length 
             int maxLength = arr.Max(i => i.Length);
-            //we will detect the process of creating depression
-            bool inProcess = false;
 
+            List<Depression> depressions = new List<Depression>();
             Depression depression = new Depression();
 
             for (int i = 0; i < maxLength; i++)
@@ -44,32 +41,33 @@ namespace PlainsAndDepressions
                     //detect empty place of array
                     if (arr[j].Length-1 < i)
                     {
-                        if(inProcess)
+                        if(depression.InProc)
                             depressions.Add(depression);
-                        inProcess = false;
+                        depression.InProc = false;
                         continue;
                     }
 
                     if (arr[j][i] == 0)
                     {
-                        if (inProcess)
-                            depression.Increase();
+                        if (depression.InProc)
+                            depression++;
                         else
-                            depression = new Depression(1);
-
-                        inProcess = true;
+                        {
+                            depression = new Depression();
+                            depression++;
+                        }
 
                         if (j == arr.Length - 1)
                         {
-                            inProcess = false;
+                            depression.InProc = false;
                             depressions.Add(depression);
                         }
                     } 
                     else
                     {
-                        if (inProcess)
+                        if (depression.InProc)
                         {
-                            inProcess = false;
+                            depression.InProc = false;
                             depressions.Add(depression);
                         }
                     }
