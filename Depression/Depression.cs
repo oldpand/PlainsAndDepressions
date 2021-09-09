@@ -8,14 +8,19 @@ namespace PlainsAndDepressions
     {
         public int Size { get; private set; }
 
-        public void Increase()
+        public bool InProc { get; set; }
+
+        public Depression()
         {
-            Size++;
+            InProc = false;
         }
-        public Depression() { }
-        public Depression(int s)
+
+        public static Depression operator ++ (Depression d)
         {
-            Size = s;
+            d.Size++;
+            d.InProc = true;
+            return d;
         }
+
     }
 }
